@@ -34,6 +34,39 @@
 	],
 	"item": [
 		{
+			"name": "0. Manutenção do Banco (Reset & Seed)",
+			"item": [
+				{
+					"name": "POST - Resetar e Repovoar Banco (Seed Inicial)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/database/reset",
+							"host": ["{{baseUrl}}"],
+							"path": ["database", "reset"]
+						},
+						"description": "Limpa todas as tabelas e recria o conjunto inicial de perfis, tecnologias, projetos e feedbacks."
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Limpar Todas as Tabelas do Banco",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/database/clean",
+							"host": ["{{baseUrl}}"],
+							"path": ["database", "clean"]
+						},
+						"description": "Limpa todas as tabelas do banco deixando-o completamente vazio."
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "1. Status da API",
 			"request": {
 				"method": "GET",
@@ -42,7 +75,7 @@
 					"raw": "{{baseUrl}}",
 					"host": ["{{baseUrl}}"]
 				},
-				"description": "Retorna informações gerais e status da API."
+				"description": "Retorna informações gerais, endpoints e link do Swagger."
 			},
 			"response": []
 		},
