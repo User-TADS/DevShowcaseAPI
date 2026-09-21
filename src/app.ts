@@ -26,18 +26,13 @@ export const createApp = (): Application => {
   app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
 
-  // Redirecionamento amigável
-  app.get('/swagger', (req: Request, res: Response) => {
+  // Redirecionamento amigável da rota raiz e /swagger diretamente para o Swagger UI
+  app.get('/', (req: Request, res: Response) => {
     res.redirect('/docs');
   });
 
-  // Rota raiz com links diretos
-  app.get('/', (req: Request, res: Response) => {
-    res.json({
-      message: 'Bem-vindo à DevShowcase API!',
-      swagger: 'Acesse http://localhost:3000/docs para abrir a documentação interativa Swagger.',
-      resetDatabase: 'Você pode resetar o banco direto pelo Swagger em /docs na tag "Manutenção do Banco"!',
-    });
+  app.get('/swagger', (req: Request, res: Response) => {
+    res.redirect('/docs');
   });
 
   // Rotas da API
