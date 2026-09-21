@@ -17,7 +17,7 @@ app.listen(PORT, () => {
   ------------------------------------------------------
   Endpoints Disponíveis:
   - GET  /docs                    (Swagger UI Interativo)
-  - POST /api/database/reset      (Botão de Reset/Seed do Banco)
+  - POST /api/database/reset      (Limpar/Zerar Banco de Dados)
   - POST /api/profiles            (Cadastro de perfil)
   - GET  /api/profiles/:id        (Buscar perfil por ID)
   - POST /api/technologies        (Cadastro de tecnologia)

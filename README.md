@@ -118,14 +118,15 @@ erDiagram
 │   │   ├── project.repository.ts
 │   │   └── feedback.repository.ts
 │   ├── routes/               # Definição e roteamento das rotas REST
+│   │   ├── database.routes.ts
 │   │   ├── profile.routes.ts
 │   │   ├── technology.routes.ts
 │   │   ├── project.routes.ts
 │   │   ├── feedback.routes.ts
 │   │   └── index.ts
-│   ├── scripts/              # Povoamento inicial do banco (Seed)
-│   │   └── seed.ts
-│   ├── app.ts                # Inicialização do Express
+│   ├── utils/                # Funções utilitárias de limpeza de banco
+│   │   └── database.util.ts
+│   ├── app.ts                # Inicialização do Express e Swagger UI
 │   └── server.ts             # Ponto de entrada do servidor HTTP
 ├── tests/                    # Suíte de testes automatizados com Jest & Supertest
 │   ├── profiles.test.ts
@@ -160,17 +161,11 @@ Gere o cliente do Prisma e aplique o esquema no banco SQLite local:
 npx prisma db push
 ```
 
-### 3. Povoar o Banco com Dados Iniciais (Seed)
-Para carregar desenvolvedores, tecnologias e projetos de exemplo prontos para apresentação:
-```bash
-npm run seed
-```
-
-### 4. Iniciar o Servidor em Modo de Desenvolvimento
+### 3. Iniciar o Servidor em Modo de Desenvolvimento
 ```bash
 npm run dev
 ```
-A API estará disponível em: `http://localhost:3000`
+A API e o Swagger estarão disponíveis em: `http://localhost:3000` (ou `http://localhost:3000/docs`)
 
 ---
 
