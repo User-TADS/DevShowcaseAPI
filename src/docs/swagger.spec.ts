@@ -4,16 +4,16 @@ export const swaggerDocument = {
     title: 'DevShowcase API - Documentação Interativa Swagger',
     version: '1.0.0',
     description: `
-**API RESTful desenvolvida com Node.js, Express, TypeScript, Prisma ORM e SQLite.**
+**API RESTful desenvolvida com Node.js, Express, TypeScript, Prisma ORM e persistência relacional SQLite.**
 
-Esta interface interativa permite testar todos os endpoints da aplicação diretamente pelo navegador, incluindo o **botão de reset/povoamento do banco de dados**.
+Todos os dados são persistidos de verdade no banco SQLite local. Não há dados pré-populados ou mocados no projeto.
 
-### Funcionalidades:
+### Recursos:
 - **Perfis (Profiles)**: 1 : N com Projetos
 - **Tecnologias (Technologies)**: N : N com Projetos
 - **Projetos (Projects)**: 1 : N com Perfis, N : N com Tecnologias, 1 : N com Feedbacks
 - **Feedbacks (Opiniões)**: 1 : N com Projetos
-- **Manutenção do Banco**: Reset e repovoamento com 1 clique (Try it out -> Execute).
+- **Manutenção do Banco**: Botão para zerar/limpar todas as tabelas.
     `,
     contact: {
       name: 'Guilherme Barbosa',
@@ -28,8 +28,8 @@ Esta interface interativa permite testar todos os endpoints da aplicação diret
   ],
   tags: [
     {
-      name: '🔧 Manutenção do Banco (Reset & Seed)',
-      description: 'Endpoints para resetar e repovoar os dados do banco SQLite com um clique',
+      name: '🔧 Manutenção do Banco (Zerar Tabelas)',
+      description: 'Endpoint para limpar e zerar todas as tabelas do banco de dados SQLite',
     },
     {
       name: 'Perfis (Profiles)',
@@ -51,45 +51,24 @@ Esta interface interativa permite testar todos os endpoints da aplicação diret
   paths: {
     '/api/database/reset': {
       post: {
-        tags: ['🔧 Manutenção do Banco (Reset & Seed)'],
-        summary: '🔄 Resetar e Repovoar Banco de Dados (Seed Completo)',
-        description: 'Limpa todas as tabelas e recria os dados de exemplo (perfis, tecnologias, projetos e feedbacks). Basta clicar em **Try it out** e depois em **Execute**!',
+        tags: ['🔧 Manutenção do Banco (Zerar Tabelas)'],
+        summary: '🧹 Limpar e Zerar Todas as Tabelas do Banco',
+        description: 'Exclui todos os registros de todas as tabelas (feedbacks, projetos, tecnologias e perfis), deixando o banco 100% vazio e zerado. Basta clicar em **Try it out** e depois em **Execute**.',
         responses: {
           200: {
-            description: 'Banco de dados resetado e repovoado com sucesso',
+            description: 'Banco de dados zerado com sucesso',
             content: {
               'application/json': {
                 example: {
                   status: 'success',
                   statusCode: 200,
-                  message: 'Banco de dados SQLite resetado e repovoado com dados iniciais com sucesso!',
-                  seeded: {
-                    profilesCount: 2,
-                    technologiesCount: 7,
-                    projectsCount: 2,
-                    feedbacksCount: 2,
+                  message: 'Todas as tabelas foram limpas com sucesso. O banco de dados está completamente zerado.',
+                  data: {
+                    profiles: 0,
+                    projects: 0,
+                    technologies: 0,
+                    feedbacks: 0,
                   },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    '/api/database/clean': {
-      post: {
-        tags: ['🔧 Manutenção do Banco (Reset & Seed)'],
-        summary: '🧹 Limpar Todas as Tabelas do Banco de Dados',
-        description: 'Exclui todos os registros de todas as tabelas deixando o banco 100% vazio.',
-        responses: {
-          200: {
-            description: 'Banco de dados limpo com sucesso',
-            content: {
-              'application/json': {
-                example: {
-                  status: 'success',
-                  statusCode: 200,
-                  message: 'Todas as tabelas do banco de dados foram limpas com sucesso!',
                 },
               },
             },
@@ -109,8 +88,8 @@ Esta interface interativa permite testar todos os endpoints da aplicação diret
                 type: 'object',
                 required: ['name'],
                 properties: {
-                  name: { type: 'string', example: 'GraphQL' },
-                  category: { type: 'string', example: 'API / Query' },
+                  name: { type: 'string', example: 'Node.js' },
+                  category: { type: 'string', example: 'Backend' },
                 },
               },
             },
@@ -142,10 +121,10 @@ Esta interface interativa permite testar todos os endpoints da aplicação diret
                 type: 'object',
                 required: ['name', 'email'],
                 properties: {
-                  name: { type: 'string', example: 'Ana Clara' },
-                  email: { type: 'string', example: 'ana.clara@example.com' },
-                  bio: { type: 'string', example: 'Engenheira de Dados e Cloud' },
-                  githubUrl: { type: 'string', example: 'https://github.com/anaclara' },
+                  name: { type: 'string', example: 'Guilherme Barbosa' },
+                  email: { type: 'string', example: 'guilherme@example.com' },
+                  bio: { type: 'string', example: 'Desenvolvedor Full Stack' },
+                  githubUrl: { type: 'string', example: 'https://github.com/guilherme' },
                 },
               },
             },
@@ -196,10 +175,10 @@ Esta interface interativa permite testar todos os endpoints da aplicação diret
                 type: 'object',
                 required: ['title', 'description', 'profileId'],
                 properties: {
-                  title: { type: 'string', example: 'Fintech Mobile App' },
-                  description: { type: 'string', example: 'Aplicativo financeiro com carteira digital' },
-                  repositoryUrl: { type: 'string', example: 'https://github.com/usuario/fintech-app' },
-                  liveUrl: { type: 'string', example: 'https://fintech.app.br' },
+                  title: { type: 'string', example: 'DevShowcase Platform' },
+                  description: { type: 'string', example: 'Plataforma para compartilhamento de portfólios' },
+                  repositoryUrl: { type: 'string', example: 'https://github.com/usuario/projeto' },
+                  liveUrl: { type: 'string', example: 'https://meuprojeto.com' },
                   profileId: { type: 'string', description: 'UUID de um perfil existente' },
                   technologyIds: {
                     type: 'array',
@@ -265,8 +244,8 @@ Esta interface interativa permite testar todos os endpoints da aplicação diret
                 type: 'object',
                 required: ['author', 'content', 'rating', 'projectId'],
                 properties: {
-                  author: { type: 'string', example: 'Tech Recruiter' },
-                  content: { type: 'string', example: 'Código muito bem estruturado e documentado!' },
+                  author: { type: 'string', example: 'Prof. Avaliador' },
+                  content: { type: 'string', example: 'Excelente arquitetura e persistência relacional!' },
                   rating: { type: 'integer', minimum: 1, maximum: 5, example: 5 },
                   projectId: { type: 'string', description: 'UUID do projeto avaliado' },
                 },

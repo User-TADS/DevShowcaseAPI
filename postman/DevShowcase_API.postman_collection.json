@@ -34,10 +34,10 @@
 	],
 	"item": [
 		{
-			"name": "0. Manutenção do Banco (Reset & Seed)",
+			"name": "0. Manutenção do Banco (Zerar Tabelas)",
 			"item": [
 				{
-					"name": "POST - Resetar e Repovoar Banco (Seed Inicial)",
+					"name": "POST - Limpar e Zerar Todas as Tabelas do Banco",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -46,21 +46,7 @@
 							"host": ["{{baseUrl}}"],
 							"path": ["database", "reset"]
 						},
-						"description": "Limpa todas as tabelas e recria o conjunto inicial de perfis, tecnologias, projetos e feedbacks."
-					},
-					"response": []
-				},
-				{
-					"name": "POST - Limpar Todas as Tabelas do Banco",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/database/clean",
-							"host": ["{{baseUrl}}"],
-							"path": ["database", "clean"]
-						},
-						"description": "Limpa todas as tabelas do banco deixando-o completamente vazio."
+						"description": "Limpa todas as tabelas do banco deixando-o completamente vazio com 0 registros."
 					},
 					"response": []
 				}

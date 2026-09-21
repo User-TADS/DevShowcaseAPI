@@ -1,31 +1,32 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { resetAndSeedDatabase, cleanDatabase } from '../utils/database.util';
+import { resetDatabase } from '../utils/database.util';
 
 const router = Router();
 
-// POST /api/database/reset - Resetar e repovoar o banco com dados padrão
+// POST /api/database/reset - Zerar e limpar todas as tabelas do banco de dados
 router.post('/reset', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const result = await resetAndSeedDatabase();
+    const result = await resetDatabase();
     res.status(200).json({
       status: 'success',
       statusCode: 200,
-      message: 'Banco de dados SQLite resetado e repovoado com dados iniciais com sucesso!',
-      seeded: result,
+      message: result.message,
+      data: result.counts,
     });
   } catch (error) {
     next(error);
   }
 });
 
-// POST /api/database/clean - Limpar todas as tabelas
+// POST /api/database/clean - Alias para limpeza do banco
 router.post('/clean', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    await cleanDatabase();
+    const result = await resetDatabase();
     res.status(200).json({
       status: 'success',
       statusCode: 200,
-      message: 'Todas as tabelas do banco de dados foram limpas com sucesso!',
+      message: result.message,
+      data: result.counts,
     });
   } catch (error) {
     next(error);
