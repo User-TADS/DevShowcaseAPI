@@ -1,0 +1,545 @@
+{
+	"info": {
+		"_postman_id": "a87e2b10-6320-4e31-9f93-c91cb10174e2",
+		"name": "DevShowcase API - Tarefa Avaliativa",
+		"description": "Coleção completa de endpoints para a avaliação prática da DevShowcase API.\nAtende a todos os requisitos de modelagem relacional, persistência, DTOs com validação e endpoints REST.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1 - Profiles (Perfis)",
+			"item": [
+				{
+					"name": "Cadastrar Perfil (POST /api/profiles)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code deve ser 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Deve retornar ID gerado e dados corretos\", function () {",
+									"    pm.expect(jsonData).to.have.property('id');",
+									"    pm.expect(jsonData.email).to.eql('guilherme.barbosa@example.com');",
+									"});",
+									"pm.environment.set(\"profile_id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Guilherme Barbosa\",\n  \"email\": \"guilherme.barbosa@example.com\",\n  \"bio\": \"Desenvolvedor Full Stack apaixonado por arquitetura limpa e APIs escaláveis.\",\n  \"github_url\": \"https://github.com/GuilhermeBarbosa556\",\n  \"linkedin_url\": \"https://linkedin.com/in/guilhermebarbosa\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/profiles",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"profiles"
+							]
+						},
+						"description": "Cadastra um novo perfil de desenvolvedor com validação de formato de URL e e-mail único."
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Perfil por ID (GET /api/profiles/{id})",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code deve ser 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Deve conter lista de projetos vinculados (1 : N)\", function () {",
+									"    pm.expect(jsonData).to.have.property('projects');",
+									"    pm.expect(Array.isArray(jsonData.projects)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/profiles/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"profiles",
+								"1"
+							]
+						},
+						"description": "Busca perfil pelo ID com carregamento relacional de seus projetos (1 : N)."
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Perfis (GET /api/profiles)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/profiles",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"profiles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2 - Technologies (Tecnologias)",
+			"item": [
+				{
+					"name": "Cadastrar Tecnologia (POST /api/technologies)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code deve ser 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"tech_id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"FastAPI\",\n  \"category\": \"Backend\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/technologies",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"technologies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Tecnologias (GET /api/technologies)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code deve ser 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Deve retornar array de tecnologias\", function () {",
+									"    pm.expect(Array.isArray(pm.response.json())).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/technologies",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"technologies"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3 - Projects (Projetos)",
+			"item": [
+				{
+					"name": "Cadastrar Projeto (POST /api/projects)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code deve ser 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Deve vincular tecnologias (N:N) e perfil (1:N)\", function () {",
+									"    pm.expect(jsonData).to.have.property('technologies');",
+									"    pm.expect(jsonData).to.have.property('profile');",
+									"});",
+									"pm.environment.set(\"project_id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"DevShowcase API\",\n  \"description\": \"API RESTful robusta com persistência relacional SQLite/PostgreSQL, validação estrita e arquitetura em camadas.\",\n  \"repository_url\": \"https://github.com/GuilhermeBarbosa556/devshowcase-api\",\n  \"live_url\": \"https://devshowcase.api.example.com\",\n  \"profile_id\": 1,\n  \"technology_ids\": [1, 2]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/projects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Projetos (GET /api/projects)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code deve ser 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Retorna lista de projetos com seus relacionamentos\", function () {",
+									"    var list = pm.response.json();",
+									"    pm.expect(Array.isArray(list)).to.be.true;",
+									"    if (list.length > 0) {",
+									"        pm.expect(list[0]).to.have.property('technologies');",
+									"        pm.expect(list[0]).to.have.property('profile');",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/projects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Projeto por ID (GET /api/projects/{id})",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/projects/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"projects",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4 - Feedbacks (Opiniões)",
+			"item": [
+				{
+					"name": "Cadastrar Feedback (POST /api/feedbacks)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code deve ser 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"author_name\": \"Mariana Souza\",\n  \"rating\": 5,\n  \"comment\": \"Excelente projeto! Código limpo, boa cobertura de testes e documentação exemplar.\",\n  \"project_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/feedbacks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"feedbacks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Feedbacks do Projeto (GET /api/feedbacks/project/{id})",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/feedbacks/project/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"feedbacks",
+								"project",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5 - Casos de Validação e Erro (Demonstração)",
+			"item": [
+				{
+					"name": "Validação: URL Inválida no Perfil (Espera 422)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Deve rejeitar URL inválida com 422 Unprocessable Entity\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Teste URL Errada\",\n  \"email\": \"url.errada@example.com\",\n  \"github_url\": \"link-invalido-sem-http\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/profiles",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"profiles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validação: E-mail Duplicado (Espera 400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Deve rejeitar e-mail duplicado com 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Guilherme Duplicado\",\n  \"email\": \"guilherme.barbosa@example.com\",\n  \"github_url\": \"https://github.com/GuilhermeBarbosa556\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/profiles",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"profiles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validação: Projeto com Perfil Inexistente (Espera 404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Deve rejeitar perfil inexistente com 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Projeto Órfão\",\n  \"description\": \"Tentativa de vincular a perfil inexistente\",\n  \"repository_url\": \"https://github.com/teste/orfao\",\n  \"profile_id\": 99999\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/projects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validação: Feedback com Nota Maior que 5 (Espera 422)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Deve rejeitar nota > 5 com 422 Unprocessable Entity\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"author_name\": \"Crítico Exigente\",\n  \"rating\": 10,\n  \"comment\": \"Nota fora do limite permitido de 1 a 5\",\n  \"project_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/feedbacks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"feedbacks"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		}
+	]
+}
