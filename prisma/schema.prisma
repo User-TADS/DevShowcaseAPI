@@ -1,0 +1,72 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 1. Entidade Perfil do Desenvolvedor
+// Relacionamento: Profile 1 : N Project
+model Profile {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  bio       String?
+  githubUrl String?
+  projects  Project[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("profiles")
+}
+
+// 2. Entidade Projeto
+// Relacionamentos:
+// - Profile 1 : N Project (pertence a Profile)
+// - Project N : N Technology (muitos para muitos)
+// - Project 1 : N Feedback (um projeto possui vários feedbacks)
+model Project {
+  id            String       @id @default(uuid())
+  title         String
+  description   String
+  repositoryUrl String?
+  liveUrl       String?
+  profileId     String
+  profile       Profile      @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  technologies  Technology[] @relation("ProjectTechnologies")
+  feedbacks     Feedback[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@map("projects")
+}
+
+// 3. Entidade Tecnologia
+// Relacionamento: Technology N : N Project
+model Technology {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  category  String?
+  projects  Project[] @relation("ProjectTechnologies")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("technologies")
+}
+
+// 4. Entidade Feedback (Opinião)
+// Relacionamento: Project 1 : N Feedback (Feedback pertence a um Project)
+model Feedback {
+  id        String   @id @default(uuid())
+  author    String
+  content   String
+  rating    Int
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("feedbacks")
+}

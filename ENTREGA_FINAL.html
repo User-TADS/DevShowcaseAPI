@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Entrega Prática - DevShowcase API</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entrega da Tarefa Avaliativa - DevShowcase API</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-    @page {
-      size: A4;
-      margin: 20mm;
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --text: #1f2937;
+      --bg: #f9fafb;
+      --card-bg: #ffffff;
+      --border: #e5e7eb;
     }
 
     * {
@@ -19,9 +21,9 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      color: #1e293b;
-      background-color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
       line-height: 1.6;
       padding: 40px 20px;
     }
@@ -29,149 +31,183 @@
     .container {
       max-width: 800px;
       margin: 0 auto;
-      background: #ffffff;
+      background: var(--card-bg);
       padding: 48px;
       border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border);
     }
 
     .header {
-      text-align: center;
-      padding-bottom: 30px;
-      border-bottom: 2px solid #e2e8f0;
-      margin-bottom: 36px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+
+    .header h1 {
+      font-size: 26px;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      font-size: 15px;
+      color: #4b5563;
     }
 
     .badge {
       display: inline-block;
-      background: #eff6ff;
-      color: #2563eb;
+      padding: 4px 12px;
+      background: #e0e7ff;
+      color: #3730a3;
+      border-radius: 9999px;
       font-size: 13px;
       font-weight: 600;
-      padding: 4px 14px;
-      border-radius: 9999px;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      margin-top: 10px;
     }
 
-    h1 {
-      font-size: 26px;
-      font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 8px;
+    .section {
+      margin-bottom: 28px;
     }
 
-    .subtitle {
-      font-size: 16px;
-      color: #64748b;
-    }
-
-    .student-info {
-      background: #f1f5f9;
-      padding: 16px 20px;
-      border-radius: 8px;
-      margin-bottom: 32px;
-      font-size: 15px;
-    }
-
-    .student-info p {
-      margin-bottom: 4px;
-    }
-
-    .student-info p:last-child {
-      margin-bottom: 0;
-    }
-
-    .section-title {
+    .section h2 {
       font-size: 18px;
-      font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 16px;
+      color: #111827;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .link-card {
-      display: block;
-      padding: 18px 24px;
-      margin-bottom: 16px;
-      background: #ffffff;
-      border: 2px solid #3b82f6;
-      border-radius: 10px;
-      text-decoration: none;
-      color: inherit;
-      transition: all 0.2s;
-    }
-
-    .link-card:hover {
-      background: #f0f7ff;
-      transform: translateY(-2px);
-    }
-
-    .link-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: #2563eb;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-
-    .link-url {
-      font-size: 17px;
-      font-weight: 600;
-      color: #0f172a;
-      word-break: break-all;
-    }
-
-    .summary-box {
-      margin-top: 36px;
-      padding-top: 24px;
-      border-top: 1px solid #e2e8f0;
-    }
-
-    .summary-grid {
+    .info-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
-      margin-top: 12px;
-    }
-
-    .summary-item {
-      background: #f8fafc;
-      padding: 14px 18px;
+      background: #f3f4f6;
+      padding: 16px;
       border-radius: 8px;
-      border-left: 4px solid #3b82f6;
-      font-size: 14px;
     }
 
-    .summary-item strong {
+    .info-item label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #6b7280;
       display: block;
-      color: #0f172a;
-      margin-bottom: 4px;
     }
 
-    .footer {
-      margin-top: 40px;
+    .info-item span, .info-item input {
+      font-size: 15px;
+      font-weight: 500;
+      color: #111827;
+    }
+
+    .editable-input {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      margin-top: 4px;
+      transition: border-color 0.2s;
+    }
+
+    .editable-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .links-card {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 24px;
+      margin-top: 16px;
+    }
+
+    .link-group {
+      margin-bottom: 20px;
+    }
+
+    .link-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .link-group label {
+      font-weight: 600;
+      font-size: 14px;
+      color: #1e3a8a;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .checklist {
+      list-style: none;
+      margin-top: 8px;
+    }
+
+    .checklist li {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #374151;
+    }
+
+    .checklist li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #16a34a;
+      font-weight: bold;
+    }
+
+    .actions {
+      margin-top: 36px;
       text-align: center;
-      font-size: 13px;
-      color: #94a3b8;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
     }
 
     @media print {
       body {
-        background: #ffffff;
+        background: white;
         padding: 0;
       }
+
       .container {
         box-shadow: none;
         border: none;
         padding: 0;
       }
-      .link-card {
-        border-color: #cbd5e1;
+
+      .actions, .no-print {
+        display: none !important;
+      }
+
+      .editable-input {
+        border: none;
+        padding: 0;
+        font-weight: 600;
+        color: #1d4ed8;
       }
     }
   </style>
@@ -179,55 +215,70 @@
 <body>
   <div class="container">
     <div class="header">
-      <div class="badge">Tarefa Avaliativa - Etapa 1</div>
-      <h1>DevShowcase API</h1>
-      <p class="subtitle">Modelagem de domínio, persistência e endpoints básicos</p>
+      <h1>DevShowcase API - Entrega da Tarefa Avaliativa</h1>
+      <p>Etapa 1: Modelagem de domínio, persistência relacional e endpoints REST</p>
+      <span class="badge">Stack: Node.js / Express / TypeScript / Prisma ORM</span>
     </div>
 
-    <div class="student-info">
-      <p><strong>Aluno(a):</strong> Guilherme Barbosa</p>
-      <p><strong>Data de Entrega:</strong> 21 de Setembro de 2026</p>
-      <p><strong>Stack Utilizada:</strong> Python 3.11 / FastAPI / SQLAlchemy / Pydantic v2 / SQLite</p>
-    </div>
-
-    <div class="section-title">🔗 Links Obrigatórios de Entrega</div>
-
-    <!-- Link 1: Repositório GitHub -->
-    <a href="https://github.com/GuilhermeBarbosa556/devshowcase-api" target="_blank" class="link-card">
-      <div class="link-label">1. Repositório Público no GitHub (Código-Fonte)</div>
-      <div class="link-url">https://github.com/GuilhermeBarbosa556/devshowcase-api</div>
-    </a>
-
-    <!-- Link 2: Vídeo no YouTube -->
-    <a href="https://youtu.be/SEU_LINK_DO_VIDEO_AQUI" target="_blank" class="link-card">
-      <div class="link-label">2. Vídeo de Demonstração Prática (Não Listado no YouTube)</div>
-      <div class="link-url">https://youtu.be/SEU_LINK_DO_VIDEO_AQUI</div>
-    </a>
-
-    <div class="summary-box">
-      <div class="section-title">📋 Resumo Técnico dos Requisitos Atendidos</div>
-      <div class="summary-grid">
-        <div class="summary-item">
-          <strong>1. Modelagem Relacional</strong>
-          Mapeamento completo das entidades Profile, Project, Technology e Feedback com relacionamentos 1:N, N:N e 1:N.
+    <div class="section">
+      <h2>📋 Identificação do Projeto</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Aluno / Integrantes</label>
+          <input type="text" class="editable-input" value="Guilherme Barbosa" id="studentName" />
         </div>
-        <div class="summary-item">
-          <strong>2. Persistência & Repositórios</strong>
-          Camada de dados desacoplada com o padrão Repository Pattern e integridade referencial via SQLite/SQLAlchemy.
-        </div>
-        <div class="summary-item">
-          <strong>3. DTOs & Validações</strong>
-          Validação estrita com Pydantic v2 (URLs válidas, strings não vazias, e-mail único e intervalos de nota).
-        </div>
-        <div class="summary-item">
-          <strong>4. Endpoints & Testes</strong>
-          Todos os endpoints RESTful implementados, documentação Swagger (/docs) e 100% de testes automatizados com Pytest.
+        <div class="info-item">
+          <label>Data de Entrega</label>
+          <input type="text" class="editable-input" value="21 de Setembro de 2026" id="deliveryDate" />
         </div>
       </div>
     </div>
 
-    <div class="footer">
-      DevShowcase API &bull; Entrega gerada para avaliação
+    <div class="section">
+      <h2>🔗 Links Obrigatórios para Avaliação</h2>
+      <div class="links-card">
+        <div class="link-group">
+          <label>1. Link do Repositório Público no GitHub (Código-Fonte):</label>
+          <input
+            type="url"
+            class="editable-input"
+            id="githubLink"
+            value="https://github.com/GuilhermeBarbosa556/devshowcase-api"
+            placeholder="Cole a URL do seu repositório aqui"
+          />
+        </div>
+
+        <div class="link-group">
+          <label>2. Link do Vídeo de Apresentação no YouTube (Não Listado, 5-8 min):</label>
+          <input
+            type="url"
+            class="editable-input"
+            id="youtubeLink"
+            value="https://youtu.be/SEU_LINK_AQUI"
+            placeholder="Cole o link do vídeo não listado no YouTube aqui"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>✅ Requisitos Técnicos Implementados</h2>
+      <ul class="checklist">
+        <li><strong>Configuração do Projeto:</strong> Node.js, Express, TypeScript, .gitignore, scripts npm e ESLint.</li>
+        <li><strong>Modelagem Relacional (Prisma ORM):</strong> Entidades <code>Profile</code>, <code>Project</code>, <code>Technology</code> e <code>Feedback</code>.</li>
+        <li><strong>Mapeamento de Relacionamentos:</strong> Profile 1:N Project, Project N:N Technology, Project 1:N Feedback.</li>
+        <li><strong>Acesso a Dados & DTOs:</strong> Padrão Repository com validações estritas via Zod (títulos não vazios, URLs válidas, e-mails, notas).</li>
+        <li><strong>Endpoints REST:</strong> POST e GET implementados para todos os recursos com status HTTP semânticos (200, 201, 400, 404, 409).</li>
+        <li><strong>Coleção Postman:</strong> Incluída no repositório com scripts automáticos de ambiente.</li>
+        <li><strong>Testes Automatizados:</strong> Suíte completa com Jest e Supertest cobrindo fluxos de sucesso e exceção.</li>
+      </ul>
+    </div>
+
+    <div class="actions">
+      <button class="btn" onclick="window.print()">🖨️ Salvar como PDF para Envio</button>
+      <p style="font-size: 12px; color: #6b7280; margin-top: 8px;" class="no-print">
+        Dica: Clique no botão acima, selecione "Salvar como PDF" como impressora e faça o upload deste arquivo na plataforma acadêmica.
+      </p>
     </div>
   </div>
 </body>

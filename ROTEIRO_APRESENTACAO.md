@@ -1,124 +1,108 @@
-# 🎬 Roteiro de Apresentação e Gravação do Vídeo (5 a 8 minutos)
+# 🎬 Roteiro Oficial para Gravação do Vídeo de Apresentação (5 a 8 Minutos)
 
-Este roteiro foi elaborado sob medida para cumprir **100% dos critérios avaliativos** descritos no documento da tarefa prática (**DevShowcase API**).
-
----
-
-## 📌 Checklist Rápido Pré-Gravação
-
-- [ ] **Ambiente**: Celular/webcam ligada e microfone testado (áudio limpo e sem ruídos).
-- [ ] **Softwares abertos**:
-  1. **OBS Studio** (ou gravador de tela de sua preferência) configurado para gravar a **tela inteira** com sua **webcam no canto ou em tela cheia no início**.
-  2. **VS Code** com a pasta `Trabalho` aberta.
-  3. **Terminal** do VS Code aberto com a API rodando: `.\venv\Scripts\uvicorn app.main:app --reload`.
-  4. **Postman** aberto com a coleção `DevShowcase_API.postman_collection.json` importada e a aba de **Console** do Postman visível no rodapé.
-  5. *(Opcional, diferencial positivo)*: Navegador na URL `http://127.0.0.1:8000/docs` (Swagger UI).
-- [ ] **Duração alvo**: Entre **5 e 7 minutos** (limite máximo de 8 minutos).
+Este roteiro foi estruturado rigorosamente com base nas diretrizes da **Tarefa Avaliativa - Etapa 1**:
+- **Tempo total:** Entre 5 e 8 minutos.
+- **Formato:** Gravar a **tela inteira** compartilhada, com áudio nítido.
+- **Abertura com Webcam:** Todos os integrantes devem aparecer no início se apresentando com o **nome completo**.
+- **Foco principal:** Demonstração prática da API em execução no **Postman** e exibição dos logs no console do terminal.
 
 ---
 
-## ⏱️ Cronograma Minuto a Minuto
+## ⏱️ Cronômetro Sugerido (Minuto a Minuto)
 
-### 🕒 [0:00 - 0:45] Introdução e Apresentação Pessoal com Webcam
-> ⚠️ **Obrigatório**: Você deve aparecer na webcam falando seu nome completo!
-
-* **Ação na tela**: Mostre sua webcam (pode ser tela cheia ou câmera no canto com o VS Code ao fundo).
-* **O que falar**:
-  > *"Olá, professor(a) e avaliadores! Meu nome é **Guilherme Barbosa**. Estou apresentando a primeira etapa do projeto prático da disciplina: a **DevShowcase API** — uma plataforma backend para portfólio e catálogo de desenvolvedores, projetos, tecnologias e opiniões. O foco desta entrega é a fundação arquitetural, a modelagem de domínio com persistência de dados relacional e a disponibilização de endpoints RESTful com validações estritas de DTO."*
-
----
-
-### 🕒 [0:45 - 2:00] Arquitetura e Modelagem do Banco Relacional no VS Code
-* **Ação na tela**: Compartilhe a tela cheia mostrando o VS Code.
-* **O que mostrar no código**:
-  1. Abra a pasta `app/models/` e destaque as **4 entidades**:
-     - `Profile` (`profile.py`): Perfil do desenvolvedor.
-     - `Project` (`project.py`): Projeto publicado.
-     - `Technology` (`technology.py`): Tecnologias/ferramentas.
-     - `Feedback` (`feedback.py`): Avaliações e notas (1 a 5).
-  2. Mostre o mapeamento dos relacionamentos exigidos:
-     - **Profile 1 : N Project**: `projects = relationship("Project", back_populates="profile")`.
-     - **Project N : N Technology**: Tabela associativa `project_technologies` em `associations.py` ligando as chaves estrangeiras.
-     - **Project 1 : N Feedback**: `feedbacks = relationship("Feedback", back_populates="project")`.
-  3. Abra rapidamente a pasta `app/schemas/` para mostrar os **DTOs com validações**:
-     - Validação de campos não vazios (`validate_not_blank`).
-     - Validação de URLs (`github_url`, `repository_url`, `live_url`).
-     - Validação de e-mail e notas de 1 a 5 (`rating`).
-  4. Mostre a pasta `app/repositories/` destacando o padrão **Repository** para desacoplar as regras do acesso ao banco de dados SQLite.
+| Tempo | Etapa | O que mostrar / falar |
+|---|---|---|
+| **00:00 - 00:45** | **Apresentação Pessoal (Câmera)** | Câmera aberta: "Olá professor, meu nome é [Seu Nome Completo] e este é o trabalho da disciplina sobre a API DevShowcase..." |
+| **00:45 - 01:45** | **Visão Geral da Arquitetura e Modelagem** | Mostrar o código no VS Code / Antigravity: stack Node.js/Express, TypeScript, Prisma ORM e SQLite, destacando a arquitetura em camadas (Controllers, Repositories, DTOs) e os relacionamentos relacionais. |
+| **01:45 - 06:45** | **Demonstração Prática no Postman e Terminal** | Dividir ou alternar a tela entre Postman e o terminal com `npm run dev`, disparando as requisições em ordem. |
+| **06:45 - 07:30** | **Testes Automatizados e Conclusão** | Rodar `npm test` no terminal demonstrando a cobertura de testes e encerrar. |
 
 ---
 
-### 🕒 [2:00 - 5:30] Demonstração Prática no Postman (O Foco Principal)
-> ⚠️ **Obrigatório**: O professor exige mostrar a requisição sendo executada e a resposta da API no console!
-> 💡 *Dica*: Abra o **Console do Postman** (canto inferior esquerdo: `Console`) para que fique visível a requisição e os testes passando em verde.
+## 📝 Passo a Passo Detalhado para a Gravação
 
-Execute as pastas da coleção nesta ordem:
+### 1. Início (00:00 - 00:45) - Apresentação Pessoal
+1. Abra seu software de gravação (OBS Studio, Google Meet, Loom, etc.).
+2. Ative a webcam em destaque.
+3. **Fale:**
+   > *"Olá professor(a) e colegas! Meu nome é [Seu Nome Completo]. Nesta apresentação da Etapa 1 do projeto DevShowcase, vou demonstrar o backend desenvolvido em Node.js com Express e TypeScript, utilizando persistência relacional com Prisma ORM e SQLite."*
 
-#### 1. Módulo de Perfis (`1 - Profiles`)
-1. **POST /api/profiles** (Cadastrar Perfil):
-   - Mostre o JSON com nome, email, bio e links do GitHub/LinkedIn.
+---
+
+### 2. Visão da Arquitetura (00:45 - 01:45) - Código & Modelagem
+1. Mude a tela para o editor de código.
+2. Abra o arquivo `prisma/schema.prisma` e aponte os modelos:
+   > *"Aqui na modelagem de domínio, criamos as 4 entidades solicitadas:"*
+   - **Profile (Perfil do Desenvolvedor)**: possui relacionamento **1 : N** com `Project`.
+   - **Project (Projeto)**: possui relacionamento **N : N** com `Technology` e relacionamento **1 : N** com `Feedback`.
+   - **Technology (Tecnologia)**: relacionada a muitos projetos.
+   - **Feedback (Opinião)**: associada diretamente a um projeto.
+3. Mostre a pasta `src/`:
+   - `src/dtos/`: Validações com Zod para campos obrigatórios, títulos não vazios e URLs válidas.
+   - `src/repositories/`: Padrão Repository isolando as queries ao banco.
+   - `src/controllers/` e `src/routes/`: Camada HTTP.
+
+---
+
+### 3. Demonstração Prática da API (01:45 - 06:45) - Postman + Terminal
+
+> 💡 **Dica:** Deixe o terminal visível em um lado da tela com `npm run dev` rodando e o Postman no outro lado. Assim, cada requisição dispara logs coloridos em tempo real no console!
+
+Importe a coleção `postman/DevShowcase_API.postman_collection.json` no Postman e execute na seguinte ordem:
+
+#### A. Tecnologias
+1. **POST - Cadastrar Tecnologia (Node.js)**:
    - Clique em **Send**.
-   - Mostre o retorno **Status 201 Created**, com o `id` gerado (ex: `1`) e os testes passando.
-2. **GET /api/profiles/1** (Buscar Perfil por ID):
+   - Mostre o status **201 Created** e aponte no terminal o log de requisição `POST /api/technologies 201`.
+2. **POST - Cadastrar Tecnologia (Prisma ORM)**:
+   - Clique em **Send** (status **201 Created**).
+3. **POST - Cadastrar Tecnologia com Nome Vazio (Validação)**:
    - Clique em **Send**.
-   - Destaque o retorno **Status 200 OK** contendo os dados do desenvolvedor e o array `projects` (que começa vazio ou com projetos relacionados).
+   - Mostre o status **400 Bad Request** com a mensagem de erro do Zod: `"O nome da tecnologia não pode estar vazio"`.
+4. **GET - Listar Todas as Tecnologias**:
+   - Clique em **Send** (status **200 OK**). Mostre o array com as tecnologias cadastradas.
 
-#### 2. Módulo de Tecnologias (`2 - Technologies`)
-3. **POST /api/technologies** (Cadastrar Tecnologia):
-   - Exemplo com `{"name": "FastAPI", "category": "Backend"}`.
-   - Clique em **Send** -> **Status 201 Created**.
-   - Cadastre uma segunda (ex: `{"name": "React", "category": "Frontend"}`).
-4. **GET /api/technologies** (Listar Tecnologias):
-   - Clique em **Send** -> **Status 200 OK**, mostrando o array com todas as tecnologias cadastradas.
+#### B. Perfis de Desenvolvedores (Profiles)
+1. **POST - Cadastrar Perfil de Desenvolvedor**:
+   - Mostre o corpo da requisição com nome, e-mail e URL do GitHub.
+   - Clique em **Send** (status **201 Created**).
+   - O Postman salva automaticamente o ID retornado.
+2. **POST - Cadastrar Perfil com Dados Inválidos (Validação)**:
+   - Clique em **Send** (status **400 Bad Request**).
+   - Aponte a validação de e-mail inválido e URL inválida.
+3. **GET - Buscar Perfil por ID**:
+   - Clique em **Send** (status **200 OK**).
+   - Mostre os detalhes do perfil e sua lista de projetos.
 
-#### 3. Módulo de Projetos com Relacionamento 1:N e N:N (`3 - Projects`)
-5. **POST /api/projects** (Cadastrar Projeto Relacionado):
-   - Mostre o payload:
-     - `profile_id: 1` (Relacionamento 1 : N com o autor).
-     - `technology_ids: [1, 2]` (Relacionamento N : N com tecnologias).
-   - Clique em **Send** -> **Status 201 Created**.
-   - Destaque no JSON retornado que a API já devolve o objeto do autor (`profile`) e o array com as tecnologias vinculadas (`technologies`).
-6. **GET /api/projects** (Listagem de Projetos):
-   - Clique em **Send** -> **Status 200 OK**, exibindo a listagem completa.
-7. **GET /api/profiles/1** (Volte ao perfil para demonstrar o 1 : N):
-   - Execute a busca novamente e mostre que o projeto recém-criado agora aparece listado dentro do perfil!
+#### C. Projetos (Projects)
+1. **POST - Cadastrar Projeto (com relacionamentos)**:
+   - Mostre no JSON: o projeto vinculado ao `profileId` (1:N) e ao array `technologyIds` (N:N).
+   - Clique em **Send** (status **201 Created**).
+   - Mostre a resposta completa com o objeto do autor (`profile`) e o array de `technologies` embutido.
+2. **POST - Cadastrar Projeto com Título Vazio (Validação)**:
+   - Clique em **Send** (status **400 Bad Request**).
+   - Mostre a validação: `"O título não pode estar vazio"`.
+3. **GET - Listar Todos os Projetos**:
+   - Clique em **Send** (status **200 OK**).
+   - Mostre a listagem completa com todos os relacionamentos carregados.
 
-#### 4. Módulo de Feedbacks / Opiniões (`4 - Feedbacks`)
-8. **POST /api/feedbacks** (Cadastrar Feedback):
-   - Envie um feedback com autor, comentário, nota 5 e `project_id: 1`.
-   - Clique em **Send** -> **Status 201 Created**.
-9. **GET /api/feedbacks/project/1** (Listar Feedbacks do Projeto):
-   - Clique em **Send** -> **Status 200 OK**, mostrando as avaliações vinculadas ao projeto (1 : N).
-
----
-
-### 🕒 [5:30 - 6:45] Demonstração de Validações e Tratamento de Erros
-> 💡 *Isso demonstra rigor técnico e garante nota máxima!*
-
-Abra a pasta `5 - Casos de Validação e Erro`:
-1. **Validação de URL Inválida**:
-   - Tente enviar `"github_url": "link-sem-protocolo"`.
-   - Execute -> Mostre o retorno **422 Unprocessable Entity** com a mensagem clara do Pydantic.
-2. **Validação de E-mail Duplicado**:
-   - Tente cadastrar o mesmo e-mail novamente.
-   - Execute -> Mostre o retorno **400 Bad Request** com `"Já existe um perfil cadastrado com este e-mail"`.
-3. **Integridade Referencial (Perfil Inexistente)**:
-   - Tente criar um projeto com `profile_id: 99999`.
-   - Execute -> Mostre o retorno **404 Not Found** ("Perfil não encontrado").
-4. **Validação de Nota (Rating fora de 1 a 5)**:
-   - Tente enviar feedback com `rating: 10`.
-   - Execute -> Mostre o retorno **422** rejeitando a nota.
+#### D. Feedbacks (Opiniões)
+1. **POST - Cadastrar Feedback para o Projeto**:
+   - Mostre o autor, texto de avaliação e rating 5 vinculado ao `projectId` (1:N).
+   - Clique em **Send** (status **201 Created**).
+2. **POST - Cadastrar Feedback com Nota Fora do Limite**:
+   - Envie com nota 10.
+   - Mostre o status **400 Bad Request** com `"A avaliação máxima é 5 estrelas"`.
+3. **GET - Listar Feedbacks por Projeto**:
+   - Clique em **Send** (status **200 OK**) mostrando as opiniões associadas.
 
 ---
 
-### 🕒 [6:45 - 7:30] Testes Automatizados no Terminal e Encerramento
-1. **No terminal do VS Code**:
-   - Execute: `.\venv\Scripts\pytest -v`
-   - Mostre todos os testes passando em verde:
-     - `test_profiles.py` PASSED
-     - `test_technologies.py` PASSED
-     - `test_projects.py` PASSED
-     - `test_feedbacks.py` PASSED
-2. **Conclusão**:
-   - *(Falando para a câmera)*:
-   > *"Como pudemos ver, todos os requisitos técnicos foram plenamente atendidos: repositório estruturado, modelagem das entidades Profile, Project, Technology e Feedback com relacionamentos 1:N, N:N e 1:N, persistência relacional, DTOs com validações completas e endpoints testados via Postman e suíte automatizada Pytest. O código está publicado no repositório público do GitHub conforme solicitado. Muito obrigado pela atenção!"*
+### 4. Testes Automatizados e Conclusão (06:45 - 07:30)
+1. No terminal, execute:
+   ```bash
+   npm test
+   ```
+2. Mostre todas as suítes de teste passando (**PASS**) com Supertest e Jest cobrindo profiles, technologies, projects e feedbacks.
+3. **Encerramento com a Câmera:**
+   > *"Como pudemos ver, todos os 4 modelos relacionais, repositórios, validações de DTOs e endpoints REST foram devidamente implementados e validados tanto manualmente via Postman quanto por testes automatizados. O código-fonte está disponível no repositório GitHub público. Muito obrigado!"*
