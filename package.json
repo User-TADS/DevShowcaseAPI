@@ -7,8 +7,6 @@
     "dev": "tsx watch src/server.ts",
     "build": "prisma generate && tsc",
     "start": "node dist/server.js",
-    "test": "jest --runInBand --detectOpenHandles --forceExit",
-    "test:coverage": "jest --coverage --runInBand --forceExit",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
     "prisma:migrate": "prisma migrate dev",

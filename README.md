@@ -8,13 +8,13 @@ Backend RESTful da plataforma **DevShowcase**, desenvolvido com **Node.js**, **E
 
 1. **Configuração e Repositório**:
    - Stack: Node.js, Express e TypeScript.
-   - Arquivo `.gitignore` devidamente configurado para Node.js, Prisma, SQLite e ambientes de teste.
+   - Arquivo `.gitignore` devidamente configurado para Node.js, Prisma, SQLite e ambientes locais.
 2. **Modelagem de Entidades Relacionais**:
    - `Profile` (Perfil do Desenvolvedor)
    - `Project` (Projeto)
    - `Technology` (Tecnologia)
    - `Feedback` (Opinião)
-   - Relacionamentos:
+   - Relacionamentos mapeados:
      - `Profile` **1 : N** `Project`
      - `Project` **N : N** `Technology`
      - `Project` **1 : N** `Feedback`
@@ -23,17 +23,16 @@ Backend RESTful da plataforma **DevShowcase**, desenvolvido com **Node.js**, **E
    - **DTOs** (`src/dtos/`) com validações estritas usando **Zod** (títulos não vazios, URLs válidas com protocolo, formato de e-mail e notas entre 1 e 5).
 4. **Endpoints REST Implementados**:
    - `POST /api/profiles` (Cadastro de perfil com validações)
-   - `GET /api/profiles/:id` (Buscar perfil por ID com projetos)
+   - `GET  /api/profiles/:id` (Buscar perfil por ID com projetos)
    - `POST /api/technologies` (Cadastro de tecnologia com validação de unicidade)
-   - `GET /api/technologies` (Listagem de tecnologias)
+   - `GET  /api/technologies` (Listagem de tecnologias)
    - `POST /api/projects` (Cadastro de projeto com validações e relacionamentos)
-   - `GET /api/projects` (Listagem de projetos com autores e tecnologias)
+   - `GET  /api/projects` (Listagem de projetos com autores e tecnologias)
    - `POST /api/feedbacks` (Cadastro de feedback para um projeto)
-   - `GET /api/feedbacks/project/:projectId` (Listagem de feedbacks por projeto)
-5. **Materiais de Apresentação e Entrega**:
-   - Coleção do Postman (`postman/DevShowcase_API.postman_collection.json`) com variáveis automáticas.
-   - Roteiro para gravação de vídeo de 5 a 8 minutos (`ROTEIRO_APRESENTACAO.md`).
-   - Gerador de documento PDF para entrega (`ENTREGA_FINAL.html`).
+   - `GET  /api/feedbacks/project/:projectId` (Listagem de feedbacks por projeto)
+5. **Documentação e Testes (Postman & Swagger)**:
+   - Documentação interativa completa via **Swagger UI** (`/docs`).
+   - Coleção de testes completa no **Postman** (`postman/DevShowcase_API.postman_collection.json`) com variáveis dinâmicas e testes de fluxos de sucesso e validação.
 
 ---
 
@@ -95,12 +94,15 @@ erDiagram
 ├── postman/
 │   └── DevShowcase_API.postman_collection.json # Coleção Postman pronta para importação
 ├── src/
-│   ├── @types/               # Declarações de tipos auxiliares
 │   ├── controllers/          # Controladores HTTP com tratamento de requisições
 │   │   ├── profile.controller.ts
 │   │   ├── technology.controller.ts
 │   │   ├── project.controller.ts
 │   │   └── feedback.controller.ts
+│   ├── docs/                 # Documentação Swagger UI e diagrama relacional
+│   │   ├── schema-prisma.svg.ts
+│   │   ├── swagger-ui.custom.ts
+│   │   └── swagger.spec.ts
 │   ├── dtos/                 # Schemas Zod de validação de entrada e DTOs de saída
 │   │   ├── profile.dto.ts
 │   │   ├── technology.dto.ts
@@ -128,13 +130,6 @@ erDiagram
 │   │   └── database.util.ts
 │   ├── app.ts                # Inicialização do Express e Swagger UI
 │   └── server.ts             # Ponto de entrada do servidor HTTP
-├── tests/                    # Suíte de testes automatizados com Jest & Supertest
-│   ├── profiles.test.ts
-│   ├── technologies.test.ts
-│   ├── projects.test.ts
-│   └── feedbacks.test.ts
-├── ENTREGA_FINAL.html        # Página interativa para gerar o PDF da entrega com os 2 links
-├── ROTEIRO_APRESENTACAO.md   # Script para gravação do vídeo de 5 a 8 minutos
 ├── tsconfig.json             # Configuração do TypeScript
 ├── package.json              # Dependências e scripts do projeto
 └── README.md                 # Documentação principal
@@ -165,20 +160,9 @@ npx prisma db push
 ```bash
 npm run dev
 ```
-A API e o Swagger estarão disponíveis em: `http://localhost:3000` (ou `http://localhost:3000/docs`)
-
----
-
-## 🧪 Como Executar os Testes Automatizados
-
-A aplicação conta com testes unitários e de integração utilizando **Jest** e **Supertest**:
-```bash
-npm test
-```
-Para ver o relatório de cobertura:
-```bash
-npm run test:coverage
-```
+A API e a documentação interativa estarão disponíveis em:
+- **Swagger UI:** `http://localhost:3000` (ou `http://localhost:3000/docs`)
+- **Status da API:** `http://localhost:3000/api`
 
 ---
 
@@ -189,13 +173,3 @@ npm run test:coverage
    `postman/DevShowcase_API.postman_collection.json`.
 3. A coleção já inclui a variável `baseUrl` (`http://localhost:3000/api`) e scripts automáticos que salvam os IDs de perfis, tecnologias e projetos gerados.
 4. Execute as requisições na ordem indicada para testar os cadastros com sucesso e os cenários de validação (status 400 e 409).
-
----
-
-## 🎥 Gravação do Vídeo (5 a 8 Minutos)
-
-Consulte o arquivo [`ROTEIRO_APRESENTACAO.md`](ROTEIRO_APRESENTACAO.md) para ver o roteiro minuto a minuto, com as falas e os passos para testar todos os endpoints exibindo os logs no console.
-
-## 📄 Entrega em PDF com os 2 Links
-
-Abra o arquivo `ENTREGA_FINAL.html` no seu navegador, insira a URL do repositório no GitHub e a URL do vídeo do YouTube (não listado), e clique no botão **"Salvar como PDF para Envio"**.

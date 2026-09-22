@@ -6,14 +6,20 @@ export const swaggerDocument = {
     description: `
 **API RESTful desenvolvida com Node.js, Express, TypeScript, Prisma ORM e persistência relacional SQLite.**
 
-Todos os dados são persistidos de verdade no banco SQLite local. Não há dados pré-populados ou mocados no projeto.
+Sistema para gerenciamento de perfis de desenvolvedores, catálogo de projetos, tecnologias associadas e avaliações de projetos.
 
-### Recursos:
+### Recursos (Cardinalidades):
 - **Perfis (Profiles)**: 1 : N com Projetos
+- **Projetos (Projects)**: N : 1 com Perfis | N : N com Tecnologias | 1 : N com Feedbacks
 - **Tecnologias (Technologies)**: N : N com Projetos
-- **Projetos (Projects)**: 1 : N com Perfis, N : N com Tecnologias, 1 : N com Feedbacks
-- **Feedbacks (Opiniões)**: 1 : N com Projetos
-- **Manutenção do Banco**: Botão para zerar/limpar todas as tabelas.
+- **Feedbacks (Opiniões)**: N : 1 com Projetos
+
+<div style="margin-top: 14px; margin-bottom: 14px;">
+  <a href="/docs/schema-prisma.svg" target="_blank" title="Clique para abrir o diagrama em tamanho real">
+    <img src="/docs/schema-prisma.svg" alt="Diagrama do Schema Prisma" style="width: 100%; max-width: 880px; border-radius: 10px; border: 1px solid #cbd5e1; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12); display: block; margin: 10px 0;" />
+  </a>
+  <small style="color: #64748b; font-size: 12px; display: block; margin-top: 4px;">🔍 <em>Dica: Clique na imagem para abrir em resolução máxima.</em></small>
+</div>
     `,
     contact: {
       name: 'Guilherme Barbosa',

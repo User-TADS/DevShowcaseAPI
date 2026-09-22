@@ -1,8 +1,5 @@
 import { prisma } from '../lib/prisma';
 
-/**
- * Limpa todas as tabelas do banco de dados SQLite, deixando o banco 100% zerado.
- */
 export async function resetDatabase() {
   await prisma.feedback.deleteMany();
   await prisma.project.deleteMany();
@@ -19,5 +16,3 @@ export async function resetDatabase() {
     },
   };
 }
-
-export const cleanDatabase = resetDatabase;

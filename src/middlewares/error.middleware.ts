@@ -9,7 +9,6 @@ export const errorHandler = (
 ): void => {
   console.error('❌ Erro na aplicação:', error);
 
-  // Tratamento de erros do Prisma
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     if (error.code === 'P2002') {
       const target = (error.meta?.target as string[])?.join(', ') || 'campo';
@@ -40,7 +39,6 @@ export const errorHandler = (
     }
   }
 
-  // Erro padrão
   res.status(500).json({
     status: 'error',
     statusCode: 500,

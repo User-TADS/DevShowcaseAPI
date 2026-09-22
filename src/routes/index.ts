@@ -7,7 +7,6 @@ import databaseRoutes from './database.routes';
 
 const router = Router();
 
-// Rota de status da API
 router.get('/', (req, res) => {
   res.json({
     name: 'DevShowcase API',
@@ -24,12 +23,10 @@ router.get('/', (req, res) => {
       projects: '/api/projects',
       feedbacks: '/api/feedbacks',
       databaseReset: '/api/database/reset',
-      databaseClean: '/api/database/clean',
     },
   });
 });
 
-// Agrupamento dos módulos
 router.use('/profiles', profileRoutes);
 router.use('/technologies', technologyRoutes);
 router.use('/projects', projectRoutes);

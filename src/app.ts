@@ -3,42 +3,38 @@ import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import routes from './routes';
 import { swaggerDocument } from './docs/swagger.spec';
+import { swaggerCustomCss, swaggerCustomJs } from './docs/swagger-ui.custom';
+import { schemaPrismaSvg } from './docs/schema-prisma.svg';
 import { requestLogger } from './middlewares/logger.middleware';
 import { errorHandler } from './middlewares/error.middleware';
 
 export const createApp = (): Application => {
   const app = express();
 
-  // Middlewares essenciais
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-
-  // Logger de requisições no console para fácil visualização
   app.use(requestLogger);
 
-  // Documentação Interativa com Swagger UI (/docs e /api-docs)
+  app.get(['/docs/schema-prisma.svg', '/schema-prisma.svg'], (req: Request, res: Response) => {
+    res.type('image/svg+xml').send(schemaPrismaSvg);
+  });
+
   const swaggerOptions = {
     customSiteTitle: 'DevShowcase API - Swagger UI',
-    customCss: '.swagger-ui .topbar { display: none }',
+    customCss: swaggerCustomCss,
+    customJsStr: swaggerCustomJs,
   };
 
-  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions as any));
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions as any));
 
-  // Redirecionamento amigável da rota raiz e /swagger diretamente para o Swagger UI
-  app.get('/', (req: Request, res: Response) => {
+  app.get(['/', '/swagger'], (req: Request, res: Response) => {
     res.redirect('/docs');
   });
 
-  app.get('/swagger', (req: Request, res: Response) => {
-    res.redirect('/docs');
-  });
-
-  // Rotas da API
   app.use('/api', routes);
 
-  // Handler de rota não encontrada (404)
   app.use((req: Request, res: Response) => {
     res.status(404).json({
       status: 'error',
@@ -47,7 +43,6 @@ export const createApp = (): Application => {
     });
   });
 
-  // Middleware global de erros
   app.use(errorHandler);
 
   return app;

@@ -9,7 +9,6 @@ export class ProjectController {
     try {
       const data: CreateProjectDTO = req.body;
 
-      // 1. Validar existência do perfil
       const profile = await profileRepository.findById(data.profileId);
       if (!profile) {
         res.status(404).json({
@@ -20,7 +19,6 @@ export class ProjectController {
         return;
       }
 
-      // 2. Validar existência das tecnologias (caso informadas)
       if (data.technologyIds && data.technologyIds.length > 0) {
         const foundTechs = await technologyRepository.findManyByIds(data.technologyIds);
         if (foundTechs.length !== data.technologyIds.length) {
@@ -35,7 +33,6 @@ export class ProjectController {
         }
       }
 
-      // 3. Criar projeto persistindo relacionamentos
       const project = await projectRepository.create(data);
       res.status(201).json({
         status: 'success',
