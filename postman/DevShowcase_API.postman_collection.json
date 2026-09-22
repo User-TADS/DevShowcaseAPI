@@ -213,7 +213,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Guilherme Barbosa\",\n  \"email\": \"guilherme.barbosa@example.com\",\n  \"bio\": \"Desenvolvedor Full Stack especializado em Node.js, Express e bancos relacionais.\",\n  \"githubUrl\": \"https://github.com/guilhermebarbosa\"\n}"
+							"raw": "{\n  \"name\": \"Guilherme Barbosa\",\n  \"email\": \"guilherme.barbosa@example.com\",\n  \"bio\": \"Desenvolvedor Full Stack especializado em Node.js, Express e bancos relacionais.\",\n  \"githubUrl\": \"https://github.com/User-TADS\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/profiles",
@@ -307,7 +307,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"title\": \"DevShowcase API\",\n  \"description\": \"Backend REST com persistência relacional SQLite e ORM Prisma para exibição de portfólios.\",\n  \"repositoryUrl\": \"https://github.com/guilhermebarbosa/devshowcase-api\",\n  \"liveUrl\": \"https://devshowcase.exemplo.com\",\n  \"profileId\": \"{{createdProfileId}}\",\n  \"technologyIds\": [\"{{createdTechId1}}\", \"{{createdTechId2}}\"]\n}"
+							"raw": "{\n  \"title\": \"DevShowcase API\",\n  \"description\": \"Backend REST com persistência relacional SQLite e ORM Prisma para exibição de portfólios.\",\n  \"repositoryUrl\": \"https://github.com/User-TADS/DevShowcaseAPI\",\n  \"liveUrl\": \"https://devshowcase.exemplo.com\",\n  \"profileId\": \"{{createdProfileId}}\",\n  \"technologyIds\": [\"{{createdTechId1}}\", \"{{createdTechId2}}\"]\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/projects",

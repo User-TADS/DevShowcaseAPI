@@ -145,8 +145,8 @@ erDiagram
 
 ### 1. Clonar e Instalar Dependências
 ```bash
-git clone <URL_DO_SEU_REPOSITORIO>
-cd Trabalho
+git clone https://github.com/User-TADS/DevShowcaseAPI.git
+cd DevShowcaseAPI
 npm install
 ```
 
